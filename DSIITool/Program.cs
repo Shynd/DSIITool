@@ -17,6 +17,13 @@ namespace DSIITool
         {
             try
             {
+                if (!Utils.HasAdminPrivs())
+                {
+                    Console.WriteLine("Run this program as administrator!");
+                    Console.ReadLine();
+                    return;
+                }
+
                 var procs = Process.GetProcessesByName("DarkSoulsII");
                 Console.WriteLine("PROC: " + procs.FirstOrDefault().Id);
                 foreach (var proc in procs)
