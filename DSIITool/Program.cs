@@ -21,7 +21,7 @@ namespace DSIITool
                 Console.WriteLine("PROC: " + procs.FirstOrDefault().Id);
                 foreach (var proc in procs)
                 {
-                    _wHandle = Native.OpenProcess((int) Native.MemoryProtection.Proc_All_Access, false, proc.Id);
+                    _wHandle = Native.OpenProcess((int) Native.MemoryProtection.AllAccess, false, proc.Id);
                     _procId = proc.Id;
                     _baseAddr = (long) Process.GetProcessById(_procId).MainModule.BaseAddress;
                 }

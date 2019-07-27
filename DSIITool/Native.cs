@@ -53,7 +53,7 @@ namespace DSIITool
             GuardModifierflag = 0x0100,
             NoCacheModifierflag = 0x0200,
             WriteCombineModifierflag = 0x0400,
-            Proc_All_Access = 2035711
+            AllAccess = 2035711
         }
     }
 }
