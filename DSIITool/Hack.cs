@@ -7,14 +7,14 @@ namespace DSIITool
         public byte[] OriginalBytes { get; private set; }
         public byte[] PatchBytes { get; private set; }
         public long Address { get; private set; }
+        public IntPtr HWnd { get; private set; }
 
-        private IntPtr _hWnd;
-
-        public Hack(long address, byte[] originalBytes, byte[] patchBytes)
+        public Hack(long address, IntPtr hWnd, byte[] originalBytes, byte[] patchBytes)
         {
             try
             {
                 Address = address;
+                HWnd = hWnd;
                 OriginalBytes = originalBytes;
                 PatchBytes = patchBytes;
             }
@@ -28,7 +28,7 @@ namespace DSIITool
         {
             try
             {
-                Native.WriteProcessMemory(_hWnd, Address, PatchBytes, PatchBytes.Length, out var _);
+                Native.WriteProcessMemory(HWnd, Address, PatchBytes, PatchBytes.Length, out var _);
             }
             catch (Exception e)
             {
@@ -40,7 +40,7 @@ namespace DSIITool
         {
             try
             {
-                Native.WriteProcessMemory(_hWnd, Address, OriginalBytes, OriginalBytes.Length, out var _);
+                Native.WriteProcessMemory(HWnd, Address, OriginalBytes, OriginalBytes.Length, out var _);
             }
             catch (Exception e)
             {
