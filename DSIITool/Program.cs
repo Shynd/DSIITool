@@ -55,8 +55,8 @@ namespace DSIITool
                 // our HP is stored at:
                 // DarkSoulsII.exe+16727A - 89 83 68010000        - mov [rbx+00000168],eax
                 // where rbx+168 is our current HP, which is
-                // subtracted by the amount of damage stored
-                // in EAX.
+                // overwritten by EAX, which stores what our HP
+                // will be after taking damage.
                 //
                 // TODO: Add infinite health hack.
                 // This requires some comparing because the
