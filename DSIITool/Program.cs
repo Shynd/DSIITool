@@ -51,6 +51,23 @@ namespace DSIITool
                 );
                 _hacks.Add("estus", estusHack);
 
+                // The opcode responsible for decrementing
+                // our HP is stored at:
+                // DarkSoulsII.exe+16727A - 89 83 68010000        - mov [rbx+00000168],eax
+                // where rbx+168 is our current HP, which is
+                // subtracted by the amount of damage stored
+                // in EAX.
+                //
+                // TODO: Add infinite health hack.
+                // This requires some comparing because the
+                // address is used by enemy NPCs as well.
+                //
+                // Comparation:
+                // If [rbx+9C8] == 1 it's the player, 0 == enemy, so jump to our modified code
+                // Else, jump to original code.
+                // This is needed because if we don't,
+                // the enemies will also have infinite health.
+
                 // Enable hacks
                 _hacks["stamina"].Enable();
                 _hacks["estus"].Enable();
@@ -62,6 +79,7 @@ namespace DSIITool
 
             Console.ReadLine();
 
+            // Disable hacks
             _hacks["stamina"].Disable();
             _hacks["estus"].Disable();
         }
