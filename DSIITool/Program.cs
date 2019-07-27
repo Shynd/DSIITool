@@ -63,10 +63,20 @@ namespace DSIITool
                 // address is used by enemy NPCs as well.
                 //
                 // Comparation:
-                // If [rbx+9C8] == 1 it's the player, 0 == enemy, so jump to our modified code
+                // If [rbx+9C8] == 1 it's the player, 0 == enemy, so jump to our modified code:
                 // Else, jump to original code.
                 // This is needed because if we don't,
                 // the enemies will also have infinite health.
+                //
+                // So our codecave will look like this:
+                // cmp [rbx+168], 1
+                // jne originalCode
+                // mov eax, [rbx+170] // rbx+170 stores our max HP value
+                // mov [rbx+168], eax // writes our max HP to our current HP
+                // jmp returnAddr
+                // originalCode:
+                // mov [rbx+168], eax
+                // jmp returnAddr
 
                 // Enable hacks
                 _hacks["stamina"].Enable();
