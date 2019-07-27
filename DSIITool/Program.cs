@@ -36,16 +36,16 @@ namespace DSIITool
                 _hacks = new Dictionary<string, Hack>();
 
                 var staminaHack = new Hack(
-                    _baseAddr + 0x32D2EE,
                     _wHandle,
+                    _baseAddr + 0x32D2EE,
                     new byte[] { 0x89, 0x81, 0xAC, 0x01, 0x00, 0x00 }, // original: mov [rcx+000001AC],eax
                     new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }  // patched:  
                 );
                 _hacks.Add("stamina", staminaHack);
 
                 var estusHack = new Hack(
-                    _baseAddr + 0x1AA952 + 1,
                     _wHandle,
+                    _baseAddr + 0x1AA952 + 1,
                     new byte[] { 0x8D, 0x51, 0xFF }, // original: lea edx,[rcx-01]
                     new byte[] { 0x8B, 0xD1, 0x90 }  // patched:  mov edx, edx
                 );

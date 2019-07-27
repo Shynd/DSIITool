@@ -9,12 +9,12 @@ namespace DSIITool
         public long Address { get; private set; }
         public IntPtr HWnd { get; private set; }
 
-        public Hack(long address, IntPtr hWnd, byte[] originalBytes, byte[] patchBytes)
+        public Hack(IntPtr hWnd, long address, byte[] originalBytes, byte[] patchBytes)
         {
             try
             {
-                Address = address;
                 HWnd = hWnd;
+                Address = address;
                 OriginalBytes = originalBytes;
                 PatchBytes = patchBytes;
             }
