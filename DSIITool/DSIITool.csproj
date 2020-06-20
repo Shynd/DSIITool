@@ -64,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hack.cs" />
+    <Compile Include="Logging\Enums\LogLevel.cs" />
+    <Compile Include="Logging\Implementations\ConsoleLogger.cs" />
+    <Compile Include="Logging\Interfaces\ILogger.cs" />
+    <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Program.cs" />

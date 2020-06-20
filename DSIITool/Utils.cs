@@ -8,8 +8,7 @@ namespace DSIITool
         {
             using (var id = WindowsIdentity.GetCurrent())
             {
-                var principal = new WindowsPrincipal(id);
-                return principal.IsInRole(WindowsBuiltInRole.Administrator);
+                return new WindowsPrincipal(id).IsInRole(WindowsBuiltInRole.Administrator);
             }
         }
     }

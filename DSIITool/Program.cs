@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DSIITool.Logging;
+using DSIITool.Logging.Enums;
+using DSIITool.Logging.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,7 +14,8 @@ namespace DSIITool
         private static int _procId;
         private static long _baseAddr;
 
-        private static Dictionary<string, Hack> _hacks;
+        private static Dictionary<string, Hack> _hacks = new Dictionary<string, Hack>();
+        private static ILogger _logger = LogManager.GetLogger();
 
         static void Main(string[] args)
         {
@@ -19,13 +23,11 @@ namespace DSIITool
             {
                 if (!Utils.HasAdminPrivs())
                 {
-                    Console.WriteLine("Run this program as administrator!");
-                    Console.ReadLine();
-                    return;
+                    ExitWithMessage("DSIITool needs to be run with administrator privileges!");
                 }
 
                 var procs = Process.GetProcessesByName("DarkSoulsII");
-                Console.WriteLine("PROC: " + procs.FirstOrDefault().Id);
+                _logger.Log(LogLevel.Information, $"Process ID: {procs.FirstOrDefault().Id}");
                 foreach (var proc in procs)
                 {
                     _wHandle = Native.OpenProcess((int) Native.MemoryProtection.AllAccess, false, proc.Id);
@@ -39,7 +41,7 @@ namespace DSIITool
                     _wHandle,
                     _baseAddr + (uint) Offsets.PlayerHacks.Stamina,
                     new byte[] { 0x89, 0x81, 0xAC, 0x01, 0x00, 0x00 }, // original: mov [rcx+000001AC],eax
-                    new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }  // patched:  
+                    new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }  // patched:
                 );
                 _hacks.Add("stamina", staminaHack);
 
@@ -84,14 +86,26 @@ namespace DSIITool
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.Log(LogLevel.Critical, $"EXCPETION:\n{e}");
             }
 
             Console.ReadLine();
 
             // Disable hacks
-            _hacks["stamina"].Disable();
-            _hacks["estus"].Disable();
+            foreach (var hack in _hacks)
+            {
+                _logger.Log(LogLevel.Information, $"Disabling hack: {hack.Key}");
+                hack.Value.Disable();
+            }
+            //_hacks["stamina"].Disable();
+            //_hacks["estus"].Disable();
+        }
+
+        private static void ExitWithMessage(string msg)
+        {
+            _logger.Log(LogLevel.Critical, msg);
+            Console.ReadLine(); // wait for input...
+            Environment.Exit(-1);
         }
     }
 }
