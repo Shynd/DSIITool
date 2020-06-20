@@ -42,6 +42,12 @@ namespace DSIITool
                     _baseAddr + (uint) Offsets.PlayerHacks.Stamina,
                     new byte[] { 0x89, 0x81, 0xAC, 0x01, 0x00, 0x00 }, // original: mov [rcx+000001AC],eax
                     new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }  // patched:
+                    //                                                 // nop,
+                    //                                                 // nop,
+                    //                                                 // nop,
+                    //                                                 // nop,
+                    //                                                 // nop,
+                    //                                                 // nop,
                 );
                 _hacks.Add("stamina", staminaHack);
 
