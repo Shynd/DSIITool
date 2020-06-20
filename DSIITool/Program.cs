@@ -47,7 +47,7 @@ namespace DSIITool
                     //                                                 // nop,
                     //                                                 // nop,
                     //                                                 // nop,
-                    //                                                 // nop,
+                    //                                                 // nop
                 );
                 _hacks.Add("stamina", staminaHack);
 
@@ -59,9 +59,9 @@ namespace DSIITool
                 );
                 _hacks.Add("estus", estusHack);
 
-                // The opcode responsible for decrementing
-                // our HP is stored at:
-                // DarkSoulsII.exe+16727A - 89 83 68010000        - mov [rbx+00000168],eax
+                // The opcode responsible for decrementing our HP is stored at:
+                // DarkSoulsII.exe+16727A - 89 83 68010000
+                //     - mov [rbx+00000168],eax
                 // where rbx+168 is our current HP, which is
                 // overwritten by EAX, which stores what our HP
                 // will be after taking damage.
@@ -70,8 +70,9 @@ namespace DSIITool
                 // This requires some comparing because the
                 // address is used by enemy NPCs as well.
                 //
-                // Comparation:
-                // If [rbx+9C8] == 1 it's the player, 0 == enemy, so jump to our modified code:
+                // Comparison:
+                // If [rbx+9C8] == 1 it's the player, 0 == enemy,
+                // so jump to our modified code:
                 // Else, jump to original code.
                 // This is needed because if we don't,
                 // the enemies will also have infinite health.
