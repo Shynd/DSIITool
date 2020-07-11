@@ -55,7 +55,8 @@ namespace DSIITool
                     _wHandle,
                     _baseAddr + (uint) Offsets.PlayerHacks.Estus + 1,
                     new byte[] { 0x8D, 0x51, 0xFF }, // original: lea edx,[rcx-01]
-                    new byte[] { 0x8B, 0xD1, 0x90 }  // patched:  mov edx, edx
+                    new byte[] { 0x8B, 0xD1, 0x90 }  // patched:  mov edx, ecx
+                    //                                            nop
                 );
                 _hacks.Add("estus", estusHack);
 
